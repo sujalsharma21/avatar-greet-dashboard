@@ -288,6 +288,21 @@ function Dashboard() {
           </form>
         </div>
       </Modal>
+
+      <Modal open={modal === "projects"} onClose={() => setModal(null)} title="Featured Projects">
+        <Section title="Project Frr — AI Dashboard">
+          <li>Real-time analytics with React + Python ML pipeline</li>
+          <li>Deployed on AWS ECS with autoscaling</li>
+        </Section>
+        <Section title="Mac Project — Native Companion">
+          <li>SwiftUI menubar app syncing with cloud workspace</li>
+          <li>Low-latency websocket layer</li>
+        </Section>
+        <Section title="Project Frreian — Design System">
+          <li>Token-driven multi-brand design system</li>
+          <li>Figma plugin + headless component library</li>
+        </Section>
+      </Modal>
     </main>
   );
 }
