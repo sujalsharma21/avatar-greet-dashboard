@@ -108,7 +108,10 @@ function Dashboard() {
         </section>
 
         {/* Projects */}
-        <section className="col-span-12 md:col-span-4 panel glow-teal p-5 fade-up">
+        <section
+          onClick={() => setModal("projects")}
+          className={`col-span-12 md:col-span-4 panel glow-teal p-5 fade-up ${hoverable}`}
+        >
           <h2 className="text-xl font-bold tracking-tight mb-4">Projects</h2>
           <div className="grid grid-cols-2 gap-3">
             <ProjectCard image={project1} title="Project Frr" accent="teal" />
@@ -120,29 +123,48 @@ function Dashboard() {
         </section>
 
         {/* Contact Me */}
-        <section className="col-span-12 md:col-span-4 panel p-6 fade-up">
+        <section
+          onClick={() => setModal("contact")}
+          className={`col-span-12 md:col-span-4 panel p-6 fade-up ${hoverable}`}
+        >
           <h2 className="text-xl font-bold tracking-tight">Contact Me</h2>
-          <dl className="mt-4 space-y-4 text-sm">
+          <dl className="mt-4 space-y-3 text-sm">
             <div>
               <dt className="font-semibold">Phone</dt>
-              <dd className="text-muted-foreground">+20 123, 456789</dd>
+              <dd className="text-muted-foreground">+20 123 456789</dd>
             </div>
             <div>
-              <dt className="font-semibold">Email Address</dt>
+              <dt className="font-semibold">Email</dt>
               <dd className="text-muted-foreground">instorm2@example.com</dd>
             </div>
             <div>
-              <dt className="font-semibold">Contact us</dt>
+              <dt className="font-semibold">Website</dt>
               <dd className="text-muted-foreground">www.example.com</dd>
             </div>
           </dl>
-          <button
-            onClick={() => setModal("contact")}
-            className="mt-5 inline-flex items-center gap-2 text-sm text-teal hover:underline"
-            style={{ color: "var(--teal)" }}
-          >
+          <div className="mt-5 flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+            {[
+              { Icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com" },
+              { Icon: Github, label: "GitHub", href: "https://github.com" },
+              { Icon: Twitter, label: "Twitter", href: "https://twitter.com" },
+              { Icon: Mail, label: "Email", href: "mailto:instorm2@example.com" },
+              { Icon: Globe, label: "Website", href: "https://example.com" },
+            ].map(({ Icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                className="h-9 w-9 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-teal transition"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
+          <span className="mt-4 inline-flex items-center gap-2 text-sm" style={{ color: "var(--teal)" }}>
             Open contact form <ArrowRight className="h-4 w-4" />
-          </button>
+          </span>
         </section>
 
         {/* Experience and Certificates */}
@@ -172,31 +194,8 @@ function Dashboard() {
             </div>
           </div>
         </button>
-
-        {/* Social links bar */}
-        <section className="col-span-12 panel p-4 flex items-center justify-between flex-wrap gap-4 fade-up">
-          <p className="text-sm text-muted-foreground">Social &amp; Contact Links</p>
-          <div className="flex items-center gap-3">
-            {[
-              { Icon: Linkedin, label: "LinkedIn" },
-              { Icon: Github, label: "GitHub" },
-              { Icon: Twitter, label: "Twitter" },
-              { Icon: Mail, label: "Email" },
-              { Icon: Globe, label: "Website" },
-            ].map(({ Icon, label }) => (
-              <a
-                key={label}
-                href="#"
-                aria-label={label}
-                className="h-10 w-10 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-teal transition"
-                style={{ borderColor: "var(--border)" }}
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
-        </section>
       </div>
+
 
       {/* Modals */}
       <Modal open={modal === "about"} onClose={() => setModal(null)} title="Extended About Me">
