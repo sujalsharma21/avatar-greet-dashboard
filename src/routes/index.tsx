@@ -44,9 +44,12 @@ function Dashboard() {
 
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-5 auto-rows-min">
         {/* About / Profile card */}
-        <section className="col-span-12 md:col-span-4 row-span-2 panel glow-teal p-6 flex flex-col fade-up">
+        <section
+          onClick={() => setModal("about")}
+          className={`col-span-12 md:col-span-4 row-span-2 panel glow-teal p-6 flex flex-col fade-up ${hoverable}`}
+        >
           <div className="relative">
-            <div className="absolute -top-2 -left-2 w-24 h-24 rounded-tl-2xl rounded-br-3xl bg-teal/80" style={{ background: "var(--teal)" }} />
+            <div className="absolute -top-2 -left-2 w-24 h-24 rounded-tl-2xl rounded-br-3xl" style={{ background: "var(--teal)" }} />
             <div className="relative rounded-xl overflow-hidden border border-border aspect-[4/4.2] bg-muted">
               <img src={profileImg} alt="Bomkigothlor portrait" loading="lazy" width={768} height={896} className="w-full h-full object-cover" />
             </div>
@@ -57,13 +60,9 @@ function Dashboard() {
             requirements and elegant design. Building with Python, JavaScript, ML and the
             cloud across the full stack.
           </p>
-          <button
-            onClick={() => setModal("about")}
-            className="mt-5 inline-flex items-center gap-2 self-start rounded-full bg-teal text-primary-foreground px-5 py-2 text-sm font-medium hover:opacity-90 transition"
-            style={{ background: "var(--teal)" }}
-          >
-            Continue <ArrowRight className="h-4 w-4" />
-          </button>
+          <span className="mt-5 inline-flex items-center gap-2 self-start text-sm font-medium" style={{ color: "var(--teal)" }}>
+            Read more <ArrowRight className="h-4 w-4" />
+          </span>
         </section>
 
         {/* Skills */}
