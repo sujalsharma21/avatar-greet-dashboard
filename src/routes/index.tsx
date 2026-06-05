@@ -23,7 +23,9 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
-type ModalKey = null | "about" | "skills" | "tech" | "experience" | "contact";
+type ModalKey = null | "about" | "skills" | "tech" | "experience" | "contact" | "projects";
+
+const hoverable = "cursor-pointer hover:-translate-y-0.5 hover:shadow-xl transition-all";
 
 function Dashboard() {
   const [modal, setModal] = useState<ModalKey>(null);
@@ -42,9 +44,12 @@ function Dashboard() {
 
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-5 auto-rows-min">
         {/* About / Profile card */}
-        <section className="col-span-12 md:col-span-4 row-span-2 panel glow-teal p-6 flex flex-col fade-up">
+        <section
+          onClick={() => setModal("about")}
+          className={`col-span-12 md:col-span-4 row-span-2 panel glow-teal p-6 flex flex-col fade-up ${hoverable}`}
+        >
           <div className="relative">
-            <div className="absolute -top-2 -left-2 w-24 h-24 rounded-tl-2xl rounded-br-3xl bg-teal/80" style={{ background: "var(--teal)" }} />
+            <div className="absolute -top-2 -left-2 w-24 h-24 rounded-tl-2xl rounded-br-3xl" style={{ background: "var(--teal)" }} />
             <div className="relative rounded-xl overflow-hidden border border-border aspect-[4/4.2] bg-muted">
               <img src={profileImg} alt="Bomkigothlor portrait" loading="lazy" width={768} height={896} className="w-full h-full object-cover" />
             </div>
@@ -55,13 +60,9 @@ function Dashboard() {
             requirements and elegant design. Building with Python, JavaScript, ML and the
             cloud across the full stack.
           </p>
-          <button
-            onClick={() => setModal("about")}
-            className="mt-5 inline-flex items-center gap-2 self-start rounded-full bg-teal text-primary-foreground px-5 py-2 text-sm font-medium hover:opacity-90 transition"
-            style={{ background: "var(--teal)" }}
-          >
-            Continue <ArrowRight className="h-4 w-4" />
-          </button>
+          <span className="mt-5 inline-flex items-center gap-2 self-start text-sm font-medium" style={{ color: "var(--teal)" }}>
+            Read more <ArrowRight className="h-4 w-4" />
+          </span>
         </section>
 
         {/* Skills */}
@@ -107,7 +108,10 @@ function Dashboard() {
         </section>
 
         {/* Projects */}
-        <section className="col-span-12 md:col-span-4 panel glow-teal p-5 fade-up">
+        <section
+          onClick={() => setModal("projects")}
+          className={`col-span-12 md:col-span-4 panel glow-teal p-5 fade-up ${hoverable}`}
+        >
           <h2 className="text-xl font-bold tracking-tight mb-4">Projects</h2>
           <div className="grid grid-cols-2 gap-3">
             <ProjectCard image={project1} title="Project Frr" accent="teal" />
@@ -119,29 +123,48 @@ function Dashboard() {
         </section>
 
         {/* Contact Me */}
-        <section className="col-span-12 md:col-span-4 panel p-6 fade-up">
+        <section
+          onClick={() => setModal("contact")}
+          className={`col-span-12 md:col-span-4 panel p-6 fade-up ${hoverable}`}
+        >
           <h2 className="text-xl font-bold tracking-tight">Contact Me</h2>
-          <dl className="mt-4 space-y-4 text-sm">
+          <dl className="mt-4 space-y-3 text-sm">
             <div>
               <dt className="font-semibold">Phone</dt>
-              <dd className="text-muted-foreground">+20 123, 456789</dd>
+              <dd className="text-muted-foreground">+20 123 456789</dd>
             </div>
             <div>
-              <dt className="font-semibold">Email Address</dt>
+              <dt className="font-semibold">Email</dt>
               <dd className="text-muted-foreground">instorm2@example.com</dd>
             </div>
             <div>
-              <dt className="font-semibold">Contact us</dt>
+              <dt className="font-semibold">Website</dt>
               <dd className="text-muted-foreground">www.example.com</dd>
             </div>
           </dl>
-          <button
-            onClick={() => setModal("contact")}
-            className="mt-5 inline-flex items-center gap-2 text-sm text-teal hover:underline"
-            style={{ color: "var(--teal)" }}
-          >
+          <div className="mt-5 flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+            {[
+              { Icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com" },
+              { Icon: Github, label: "GitHub", href: "https://github.com" },
+              { Icon: Twitter, label: "Twitter", href: "https://twitter.com" },
+              { Icon: Mail, label: "Email", href: "mailto:instorm2@example.com" },
+              { Icon: Globe, label: "Website", href: "https://example.com" },
+            ].map(({ Icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                className="h-9 w-9 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-teal transition"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
+          <span className="mt-4 inline-flex items-center gap-2 text-sm" style={{ color: "var(--teal)" }}>
             Open contact form <ArrowRight className="h-4 w-4" />
-          </button>
+          </span>
         </section>
 
         {/* Experience and Certificates */}
@@ -171,31 +194,8 @@ function Dashboard() {
             </div>
           </div>
         </button>
-
-        {/* Social links bar */}
-        <section className="col-span-12 panel p-4 flex items-center justify-between flex-wrap gap-4 fade-up">
-          <p className="text-sm text-muted-foreground">Social &amp; Contact Links</p>
-          <div className="flex items-center gap-3">
-            {[
-              { Icon: Linkedin, label: "LinkedIn" },
-              { Icon: Github, label: "GitHub" },
-              { Icon: Twitter, label: "Twitter" },
-              { Icon: Mail, label: "Email" },
-              { Icon: Globe, label: "Website" },
-            ].map(({ Icon, label }) => (
-              <a
-                key={label}
-                href="#"
-                aria-label={label}
-                className="h-10 w-10 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-teal transition"
-                style={{ borderColor: "var(--border)" }}
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
-        </section>
       </div>
+
 
       {/* Modals */}
       <Modal open={modal === "about"} onClose={() => setModal(null)} title="Extended About Me">
@@ -263,6 +263,19 @@ function Dashboard() {
               <li className="flex items-start gap-3"><Mail className="h-4 w-4 mt-0.5 text-teal" style={{ color: "var(--teal)" }}/><div><p className="font-medium">Email</p><p className="text-muted-foreground">instorm2@example.com</p></div></li>
               <li className="flex items-start gap-3"><Globe className="h-4 w-4 mt-0.5 text-teal" style={{ color: "var(--teal)" }}/><div><p className="font-medium">Website</p><p className="text-muted-foreground">www.example.com</p></div></li>
             </ul>
+            <div className="mt-5 flex items-center gap-3">
+              {[
+                { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+                { Icon: Github, href: "https://github.com", label: "GitHub" },
+                { Icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+                { Icon: Globe, href: "https://example.com", label: "Website" },
+              ].map(({ Icon, href, label }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
+                   className="h-9 w-9 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-teal transition">
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
           </div>
           <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); setModal(null); }}>
             <h4 className="font-semibold">Message Form</h4>
@@ -274,6 +287,21 @@ function Dashboard() {
             </button>
           </form>
         </div>
+      </Modal>
+
+      <Modal open={modal === "projects"} onClose={() => setModal(null)} title="Featured Projects">
+        <Section title="Project Frr — AI Dashboard">
+          <li>Real-time analytics with React + Python ML pipeline</li>
+          <li>Deployed on AWS ECS with autoscaling</li>
+        </Section>
+        <Section title="Mac Project — Native Companion">
+          <li>SwiftUI menubar app syncing with cloud workspace</li>
+          <li>Low-latency websocket layer</li>
+        </Section>
+        <Section title="Project Frreian — Design System">
+          <li>Token-driven multi-brand design system</li>
+          <li>Figma plugin + headless component library</li>
+        </Section>
       </Modal>
     </main>
   );
