@@ -23,7 +23,9 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
-type ModalKey = null | "about" | "skills" | "tech" | "experience" | "contact";
+type ModalKey = null | "about" | "skills" | "tech" | "experience" | "contact" | "projects";
+
+const hoverable = "cursor-pointer hover:-translate-y-0.5 hover:shadow-xl transition-all";
 
 function Dashboard() {
   const [modal, setModal] = useState<ModalKey>(null);
