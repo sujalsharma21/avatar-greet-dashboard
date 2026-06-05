@@ -263,6 +263,19 @@ function Dashboard() {
               <li className="flex items-start gap-3"><Mail className="h-4 w-4 mt-0.5 text-teal" style={{ color: "var(--teal)" }}/><div><p className="font-medium">Email</p><p className="text-muted-foreground">instorm2@example.com</p></div></li>
               <li className="flex items-start gap-3"><Globe className="h-4 w-4 mt-0.5 text-teal" style={{ color: "var(--teal)" }}/><div><p className="font-medium">Website</p><p className="text-muted-foreground">www.example.com</p></div></li>
             </ul>
+            <div className="mt-5 flex items-center gap-3">
+              {[
+                { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+                { Icon: Github, href: "https://github.com", label: "GitHub" },
+                { Icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+                { Icon: Globe, href: "https://example.com", label: "Website" },
+              ].map(({ Icon, href, label }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
+                   className="h-9 w-9 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-teal transition">
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
           </div>
           <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); setModal(null); }}>
             <h4 className="font-semibold">Message Form</h4>
